@@ -1,46 +1,31 @@
+import { useState } from 'react'
 import './App.css'
-import {useState}  from 'react'
+import { useEffect } from 'react';
 
-//custom hooks encapsulate and reuse stateful logic across components
-
-function useCounter()
-{
-  const [count, setCount] = useState(0);
-  
-  function increaseCount()
-  {
-    setCount(c=>c+1)
-  }
-  return{
-    count:count,
-    increaseCount:increaseCount
-  }
-
-}
+//basic understanding of usefetch hook
 function App() {
   
-  return <div>
-     <Counter/>
-     <Counter/>
-     <Counter/>
+  const[post,setPost]=useState({});
+
+  async function getPosts()
+  {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+    const json=await response.json();
+    setPost(json);
+  }
+
+  useEffect(()=>{
+    getPosts();
+  },[])
+
+  return (
+  <div>
+    {post.title}
   </div>
+  )
 
   
 }
 
-function Counter()
-{
-  const {count,increaseCount}=useCounter();
-
-  return (
-    <>
-      <div>
-        <button onClick={increaseCount}>Increase
-          {count}
-        </button>
-      </div>
-    </>
-  )
-}
 
 export default App
