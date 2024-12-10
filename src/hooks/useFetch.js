@@ -17,20 +17,24 @@ export function usePostTitle()
 
   return post.title;
 }
-
+    
 export function useFetch(url){
 
     const [finalData,setFinalData]=useState({});
+    const [loading,setloading]=useState(true);
 
     async function getDetails()
     {
+        setloading(true);
         const response= await fetch(url);
         const json= await response.json();
         setFinalData(json);
+        setloading(false);
     }
     useEffect(()=>{
         getDetails();
-    },[])
+    },[url])
+    //url is the dependency where changing leading to different ouptut
 
     return {
         finalData
