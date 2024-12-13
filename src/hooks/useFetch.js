@@ -22,7 +22,6 @@ export function useFetch(url){
 
     const [finalData,setFinalData]=useState({});
     const [loading,setloading]=useState(true);
-
     async function getDetails()
     {
         setloading(true);

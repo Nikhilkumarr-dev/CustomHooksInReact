@@ -1,29 +1,24 @@
-import { useState } from 'react';
-import './App.css'
-import { useFetch} from './hooks/useFetch';
+import { useState } from "react";
+import "./App.css";
+import { usePrev } from "./hooks/usePrev";
 
-//basic understanding of usefetch hook
 function App() {
-  
-  const [currentPost,setCurrentPost]=useState(1);
-  const {finalData,loading} = useFetch("https://jsonplaceholder.typicode.com/posts/" + currentPost);
-
-  if(loading){
-    return <div>
-      Loading .....
-    </div>
-  }
-
+  const [state, setState] = useState(0);
+  const prev = usePrev(state);
 
   return (
-  <div>
-    <button onClick={()=>setCurrentPost(1)} >1</button>
-    <button onClick={()=>setCurrentPost(2)}>2</button>
-    <button onClick={()=>setCurrentPost(3)}>3</button>
-    {JSON.stringify(finalData)}
-  </div>
-  )  
+    <>
+      <p>{state}</p>
+      <button
+        onClick={() => {
+          setState((state + 1));
+        }}
+      >
+        clickme
+      </button>
+      <p>the previous value {prev}</p>
+    </>
+  );
 }
 
-
-export default App
+export default App;
